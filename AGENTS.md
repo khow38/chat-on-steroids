@@ -1335,6 +1335,14 @@ retains the latest 64 completed results for this app lifetime, with 256 KiB of r
 output each (and delimiter-free batch presentation). Completed rereads have no unread debt,
 live-process capacity charge or automatic reoffer. Eviction/shutdown drops their existing
 custody entries; retained ids cannot be reallocated. Unread results keep their separate bounds.
+On Windows, node-pty publishes PTY completion only after both output closure and the native
+exit callback for that same process; either event may arrive first. An absent code never means
+success. `scripts/patch-node-pty.mjs` maintains the pinned dependency correction with exact
+source authentication; npm postinstall and Nix's writable dependency build apply it, while
+development, build, verification and packaging check it. Existing checkouts run that script
+once after updating. Connection failures retain their explicit startup error code. Tests in
+`windows-pty-exit.test.ts` exercise both event orders through the actual Windows PTY code and
+Core manager, including numeric terminal packets and completed rereads.
 Tool descriptions and result markers say what a tool does, never how its output should be treated or
 that a call is harmless: ChatGPT's safety check flagged `write_stdin`'s "including automatic delivery;
 never reruns work" as a Suspicious Instruction and held a long run on an approval card (2026-10-15).

@@ -53,6 +53,9 @@
               preInstall = ''
                 export PATH="$PWD/node_modules/.bin:$PATH"
 
+                # npm lifecycle scripts are disabled; patch while the dependency tree is writable.
+                node ${./scripts/patch-node-pty.mjs} --node-modules "$PWD/node_modules"
+
                 # Keep both Electron consumers on the nixpkgs runtime. The npm
                 # package resolves through path.txt, while electron-vite directly
                 # spawns node_modules/electron/dist/electron.
